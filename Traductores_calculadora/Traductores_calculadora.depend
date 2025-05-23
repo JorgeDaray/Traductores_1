@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1675374675 source:d:\traductores_l\programas\traductores_calculadora\main.cpp
+	<iostream>
+	<string.h>
+

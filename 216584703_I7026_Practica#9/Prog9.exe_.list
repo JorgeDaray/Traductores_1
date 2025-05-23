@@ -1,0 +1,277 @@
+EMU8086 GENERATED LISTING. MACHINE CODE <- SOURCE.
+ 
+Prog9.exe_ -- emu8086 assembler version: 4.08  
+ 
+[ 11/03/2023  --  1:43:57 ] 
+ 
+===================================================================================================
+[LINE]     LOC: MACHINE CODE                          SOURCE
+===================================================================================================
+ 
+[   1]        :                                       PAGE 60,132              ;Mismo codigo que el de la practica 8 pero repetido 3 veces
+[   2]        :                                       TITLE PROG9.EXE
+[   3]        :                                       .MODEL MEDIUM
+[   4]        :                                       .STACK 64
+[   5]        :                                       ;_____________________________________
+[   6]        :                                       
+[   7]        :                                       .DATA
+[   8]    0040:                                       ENTRADA1 LABEL BYTE
+[   9]    0040: 14                                    LONMAX1 DB 20
+[  10]    0041: 00                                    LONREAL1 DB ?
+[  11]    0042: 20 20 20 20 20 20 20 20 20 20 20 20   INTRO1 DB 21 DUP (' ')
+                20 20 20 20 20 20 20 20 20          
+[  12]    0057:                                       ENTRADA2 LABEL BYTE
+[  13]    0057: 19                                    LONMAX2 DB 25
+[  14]    0058: 00                                    LONREAL2 DB ?
+[  15]    0059: 20 20 20 20 20 20 20 20 20 20 20 20   INTRO2 DB 21 DUP (' ')
+                20 20 20 20 20 20 20 20 20          
+[  16]    006E:                                       ENTRADA3 LABEL BYTE
+[  17]    006E: 14                                    LONMAX3 DB 20
+[  18]    006F: 00                                    LONREAL3 DB ?
+[  19]    0070: 20 20 20 20 20 20 20 20 20 20 20 20   INTRO3 DB 21 DUP (' ')
+                20 20 20 20 20 20 20 20 20          
+[  20]    0085: 4E 4F 4D 42 52 45 3A 20 24            ETIQ1 DB 'NOMBRE : ','$'
+[  21]    008E: 43 41 52 52 45 52 41 3A 20 24         ETIQ2 DB 'CARRERA : ','$'
+[  22]    0098: 52 45 47 49 53 54 52 4F 3A 20 24      ETIQ3 DB 'REGISTRO : ','$'
+[  23]        :                                       ;_____________________________________
+[  24]        :                                       .CODE
+[  25]    00B0:                                       MAIN PROC FAR
+[  26]    00B0: B8 04 00                              MOV AX, @DATA
+[  27]    00B3: 8E D8                                 MOV DS, AX
+[  28]    00B5: E8 3E 00                              CALL PANT0
+[  29]    00B8: E8 48 00                              CALL CURS1
+[  30]    00BB: E8 4F 00                              CALL DESPM1
+[  31]    00BE: E8 54 00                              CALL TECLA1
+[  32]    00C1: E8 59 00                              CALL CAMPANA1
+[  33]    00C4: E8 66 00                              CALL CURS2
+[  34]    00C7: E8 6D 00                              CALL DESPM2
+[  35]    00CA: E8 72 00                              CALL TECLA2
+[  36]    00CD: E8 77 00                              CALL CAMPANA2
+[  37]    00D0: E8 84 00                              CALL CURS3
+[  38]    00D3: E8 8B 00                              CALL DESPM3
+[  39]    00D6: E8 90 00                              CALL TECLA3
+[  40]    00D9: E8 95 00                              CALL CAMPANA3
+[  41]    00DC: E8 AF 00                              CALL PANT2
+[  42]    00DF: E8 B9 00                              CALL CURS11
+[  43]    00E2: E8 C0 00                              CALL DESP1
+[  44]    00E5: E8 C5 00                              CALL CURS21
+[  45]    00E8: E8 CC 00                              CALL DESP2
+[  46]    00EB: E8 D1 00                              CALL CURS31
+[  47]    00EE: E8 D8 00                              CALL DESP3
+[  48]    00F1: B8 00 4C                              MOV AX,4C00H
+[  49]    00F4: CD 21                                 INT 21H
+[  50]        :                                       MAIN ENDP
+[  51]        :                                       ;_____________________________________
+[  52]    00F6:                                       PANT0 PROC NEAR
+[  53]    00F6: B4 06                                 MOV AH,06H
+[  54]    00F8: B7 47                                 MOV BH,47H
+[  55]    00FA: B9 00 00                              MOV CX,0000H
+[  56]    00FD: BA 4F 18                              MOV DX,184FH
+[  57]    0100: CD 10                                 INT 10H
+[  58]    0102: C3                                    RET
+[  59]        :                                       PANT0 ENDP
+[  60]        :                                       ;_____________________________________
+[  61]    0103:                                       CURS1 PROC NEAR
+[  62]    0103: B4 02                                 MOV AH,02H
+[  63]    0105: B7 00                                 MOV BH,00H
+[  64]    0107: BA 04 04                              MOV DX,0404H
+[  65]    010A: CD 10                                 INT 10H
+[  66]    010C: C3                                    RET
+[  67]        :                                       CURS1 ENDP
+[  68]        :                                       ;_____________________________________
+[  69]    010D:                                       DESPM1 PROC NEAR
+[  70]    010D: B4 09                                 MOV AH,09H
+[  71]    010F: BA 45 00                              LEA DX,ETIQ1
+[  72]    0112: CD 21                                 INT 21H
+[  73]    0114: C3                                    RET
+[  74]        :                                       DESPM1 ENDP
+[  75]        :                                       ;_____________________________________
+[  76]        :                                       
+[  77]    0115:                                       TECLA1 PROC NEAR
+[  78]    0115: B4 0A                                 MOV AH,0AH
+[  79]    0117: BA 00 00                              LEA DX, ENTRADA1
+[  80]    011A: CD 21                                 INT 21H
+[  81]    011C: C3                                    RET
+[  82]        :                                       TECLA1 ENDP
+[  83]        :                                       ;_____________________________________
+[  84]    011D:                                       CAMPANA1 PROC NEAR
+[  85]    011D: BB 00 00                              MOV BX,00H
+[  86]    0120: 8A 1E 01 00                           MOV BL, LONREAL1
+[  87]    0124: C6 47 02 07                           MOV INTRO1[BX],07H ; SONIDO CAMPANA
+[  88]    0128: C6 47 03 24                           MOV INTRO1[BX+1],'$' ; DELIMTA LA CADENA
+[  89]    012C: C3                                    RET
+[  90]        :                                       CAMPANA1 ENDP
+[  91]        :                                       ;_____________________________________
+[  92]    012D:                                       CURS2 PROC NEAR
+[  93]    012D: B4 02                                 MOV AH,02H
+[  94]    012F: B7 00                                 MOV BH,00H
+[  95]    0131: BA 04 06                              MOV DX,0604H
+[  96]    0134: CD 10                                 INT 10H
+[  97]    0136: C3                                    RET
+[  98]        :                                       CURS2 ENDP
+[  99]        :                                       ;_____________________________________
+[ 100]    0137:                                       DESPM2 PROC NEAR
+[ 101]    0137: B4 09                                 MOV AH,09H
+[ 102]    0139: BA 4E 00                              LEA DX, ETIQ2
+[ 103]    013C: CD 21                                 INT 21H
+[ 104]    013E: C3                                    RET
+[ 105]        :                                       DESPM2 ENDP
+[ 106]        :                                       ;_____________________________________
+[ 107]    013F:                                       TECLA2 PROC NEAR
+[ 108]    013F: B4 0A                                 MOV AH,0AH
+[ 109]    0141: BA 17 00                              LEA DX, ENTRADA2
+[ 110]    0144: CD 21                                 INT 21H
+[ 111]    0146: C3                                    RET
+[ 112]        :                                       TECLA2 ENDP
+[ 113]        :                                       ;_____________________________________
+[ 114]        :                                       
+[ 115]    0147:                                       CAMPANA2 PROC NEAR
+[ 116]    0147: BB 00 00                              MOV BX,00H
+[ 117]    014A: 8A 1E 18 00                           MOV BL, LONREAL2
+[ 118]    014E: C6 47 19 07                           MOV INTRO2[BX],07H
+[ 119]    0152: C6 47 1A 24                           MOV INTRO2[BX+1],'$'
+[ 120]    0156: C3                                    RET
+[ 121]        :                                       CAMPANA2 ENDP
+[ 122]        :                                       ;_____________________________________
+[ 123]    0157:                                       CURS3 PROC NEAR
+[ 124]    0157: B4 02                                 MOV AH,02H
+[ 125]    0159: B7 00                                 MOV BH,00H
+[ 126]    015B: BA 04 08                              MOV DX,0804H
+[ 127]    015E: CD 10                                 INT 10H
+[ 128]    0160: C3                                    RET
+[ 129]        :                                       CURS3 ENDP
+[ 130]    0161:                                       DESPM3 PROC NEAR
+[ 131]    0161: B4 09                                 MOV AH,09H
+[ 132]    0163: BA 58 00                              LEA DX, ETIQ3
+[ 133]    0166: CD 21                                 INT 21H
+[ 134]    0168: C3                                    RET
+[ 135]        :                                       DESPM3 ENDP
+[ 136]        :                                       ;_____________________________________
+[ 137]    0169:                                       TECLA3 PROC NEAR
+[ 138]    0169: B4 0A                                 MOV AH,0AH
+[ 139]    016B: BA 2E 00                              LEA DX, ENTRADA3
+[ 140]    016E: CD 21                                 INT 21H
+[ 141]    0170: C3                                    RET
+[ 142]        :                                       TECLA3 ENDP
+[ 143]        :                                       ;_____________________________________
+[ 144]    0171:                                       CAMPANA3 PROC NEAR
+[ 145]    0171: BB 00 00                              MOV BX,00H
+[ 146]    0174: 8A 1E 2F 00                           MOV BL, LONREAL3
+[ 147]    0178: C6 47 30 07                           MOV INTRO3[BX],07H
+[ 148]    017C: C6 47 31 24                           MOV INTRO3[BX+1],'$'
+[ 149]    0180: C3                                    RET
+[ 150]        :                                       CAMPANA3 ENDP
+[ 151]        :                                       ;_____________________________________
+[ 152]        :                                       
+[ 153]    0181:                                       PANT1 PROC NEAR
+[ 154]    0181: B4 06                                 MOV AH,06H
+[ 155]    0183: B7 47                                 MOV BH,47H
+[ 156]    0185: B9 00 00                              MOV CX,0000H
+[ 157]    0188: BA 4F 18                              MOV DX,184FH
+[ 158]    018B: CD 10                                 INT 10H
+[ 159]    018D: C3                                    RET
+[ 160]        :                                       PANT1 ENDP
+[ 161]        :                                       ;_____________________________________
+[ 162]        :                                       
+[ 163]    018E:                                       PANT2 PROC NEAR
+[ 164]    018E: B4 06                                 MOV AH,06H
+[ 165]    0190: B7 F0                                 MOV BH,0F0H
+[ 166]    0192: B9 0A 11                              MOV CX,110AH
+[ 167]    0195: BA 3F 13                              MOV DX,133FH
+[ 168]    0198: CD 10                                 INT 10H
+[ 169]    019A: C3                                    RET
+[ 170]        :                                       PANT2 ENDP
+[ 171]        :                                       ;_____________________________________
+[ 172]    019B:                                       CURS11 PROC NEAR
+[ 173]    019B: B4 02                                 MOV AH,02H
+[ 174]    019D: B7 00                                 MOV BH,00H
+[ 175]    019F: BA 1A 11                              MOV DX,111AH
+[ 176]    01A2: CD 10                                 INT 10H
+[ 177]    01A4: C3                                    RET
+[ 178]        :                                       CURS11 ENDP
+[ 179]        :                                       ;_____________________________________
+[ 180]    01A5:                                       DESP1 PROC NEAR
+[ 181]    01A5: B4 09                                 MOV AH,09H
+[ 182]    01A7: BA 02 00                              LEA DX, INTRO1
+[ 183]    01AA: CD 21                                 INT 21H
+[ 184]    01AC: C3                                    RET
+[ 185]        :                                       DESP1 ENDP
+[ 186]        :                                       ;_____________________________________
+[ 187]    01AD:                                       CURS21 PROC NEAR
+[ 188]    01AD: B4 02                                 MOV AH,02H
+[ 189]    01AF: B7 00                                 MOV BH,00H
+[ 190]    01B1: BA 1A 12                              MOV DX,121AH
+[ 191]    01B4: CD 10                                 INT 10H
+[ 192]    01B6: C3                                    RET
+[ 193]        :                                       CURS21 ENDP
+[ 194]        :                                       ;_____________________________________
+[ 195]    01B7:                                       DESP2 PROC NEAR
+[ 196]    01B7: B4 09                                 MOV AH,09H
+[ 197]    01B9: BA 19 00                              LEA DX, INTRO2
+[ 198]    01BC: CD 21                                 INT 21H
+[ 199]    01BE: C3                                    RET
+[ 200]        :                                       DESP2 ENDP
+[ 201]        :                                       ;_____________________________________
+[ 202]        :                                       
+[ 203]    01BF:                                       CURS31 PROC NEAR
+[ 204]    01BF: B4 02                                 MOV AH,02H
+[ 205]    01C1: B7 00                                 MOV BH,00H
+[ 206]    01C3: BA 1A 13                              MOV DX,131AH
+[ 207]    01C6: CD 10                                 INT 10H
+[ 208]    01C8: C3                                    RET
+[ 209]        :                                       CURS31 ENDP
+[ 210]        :                                       ;_____________________________________
+[ 211]    01C9:                                       DESP3 PROC NEAR
+[ 212]    01C9: B4 09                                 MOV AH,09H
+[ 213]    01CB: BA 30 00                              LEA DX, INTRO3
+[ 214]    01CE: CD 21                                 INT 21H
+[ 215]    01D0: C3                                    RET
+[ 216]        :                                       DESP3 ENDP
+[ 217]        :                                       ;_____________________________________
+[ 218]        :                                       END MAIN
+[ 219]        :                                       
+ 
+===================================================================================================
+ 
+EXE HEADER - bytes from 0000 to 01FF inclusive.
+
+0000: 4D      -   exe signature (M)
+0001: 5A      -   exe signature (Z)
+0002: D1      -   bytes on last page (l.byte)
+0003: 01      -   bytes on last page (h.byte)
+0004: 02      -   512 byte pages in file (l.byte)
+0005: 00      -   512 byte pages in file (h.byte)
+0006: 01      -   relocations (l.byte)
+0007: 00      -   relocations (h.byte)
+0008: 20      -   paragraphs in header (l.byte)
+0009: 00      -   paragraphs in header (h.byte)
+000A: 00      -   minimum memory (l.byte)
+000B: 00      -   minimum memory (h.byte)
+000C: FF      -   maximum memory (l.byte)
+000D: FF      -   maximum memory (h.byte)
+000E: 00      -   SS - stack segment (l.byte)
+000F: 00      -   SS - stack segment (h.byte)
+0010: 40      -   SP - stack pointer (l.byte)
+0011: 00      -   SP - stack pointer (h.byte)
+0012: E7      -   check sum (l.byte)
+0013: 47      -   check sum (h.byte)
+0014: 00      -   IP - instruction pointer (l.byte)
+0015: 00      -   IP - instruction pointer (h.byte)
+0016: 0B      -   CS - code segment (l.byte)
+0017: 00      -   CS - code segment (h.byte)
+0018: 1E      -   relocation table adress (l.byte)
+0019: 00      -   relocation table adress (h.byte)
+001A: 00      -   overlay number (l.byte)
+001B: 00      -   overlay number (h.byte)
+001C: 01      -   signature (l.byte)
+001D: 00      -   signature (h.byte)
+001E: 01      -   relocation table - offset inside segment (l.byte)
+001F: 00      -   relocation table - offset inside segment (h.byte)
+0020: 0B      -   relocation table - segment anchor (l.byte)
+0021: 00      -   relocation table - segment anchor (h.byte)
+0022 to 01FF  -   reserved relocation area  (00) 
+
+
+
+
+===================================================================================================

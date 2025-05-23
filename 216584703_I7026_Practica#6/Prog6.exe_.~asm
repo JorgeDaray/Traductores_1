@@ -1,0 +1,47 @@
+PAGE 60,132                    ;Numero de filas y columnas
+TITLE PROG6.EXE                ;Titulo del programa
+.MODEL SMALL                   ;Habilita dos segmentos de 64kb.
+;_____________________________________
+.STACK 64                      ;Definicion del segmento de pila
+.DATA                          ;Definicion del segmento de datos
+MEN DB 'CAMBIAR A MINUSCULAS'  ;Definicion del string a usar
+;_____________________________________
+.CODE                          ;Inicio del codigo
+MAIN PROC NEAR                 ;Directiva de inicio NEAR
+MOV AX,@DATA               ;Se le asigna el valora la direccion DATA
+MOV DS,AX                  ;Mover AX a DS
+LEA BX, MEN                ;Mover el contenido de MEN a BX
+MOV CX,20                  ;Mover 20 al registro CX
+;_____________________________________
+OTRO:                          ;Inicio de la funcion OTRO
+MOV AH,[BX]                ;Movemos lo del registro a la cadena BX
+CMP AH,41H                 ;Comparamos el valor 41H en ascii(A) con AH
+JB OTRO2                   ;Salto a la funcion OTRO2 solo si flag CF es 1
+CMP AH,5AH                 ;Comparamos el valor 5AH en ascii(Z) con AH
+JA OTRO2                   ;Salto a la funcion OTRO2 solo si flag CF es 0
+OR AH,00100000B            ;El equivalente para convertir de mayúsculas a minúsculas
+;corresponde a sumar 32 al valor de AH (b5=1)
+MOV [BX],AH                ;Mover lo de la cadena BX a AH
+;Inicia funcion para convertir de minus a mayus
+CMP AH,61H                 ;Comparamos el valor 61H en ascii(a) con AH
+JB OTRO2
+CMP AH,7AH                 ;Comparamos el valor 7AH en ascii(z) con AH
+JA OTRO2
+AND AH,11011111B           ;La diferencia entre una letra minúscula y su equivalente
+;en mayúscula en Código ASCII es 32 (b5=0)
+MOV [BX],AH
+;_____________________________________
+OTRO2:                         ;Inicio de funcion OTRO2
+INC BX                     ;Incrementador de BX en 1
+LOOP OTRO                  ;Salto a la funcion OTRO para convertir
+;de mayus a minus, y viceversa
+JMP .CODE                  ;Bucle indefinido que retorna a .CODE
+;para nomas repetir nuestra oracion
+MOV AX,4C00H               ;Salida a DOS
+INT 21H                    ;Interrupcion 21H
+MAIN ENDP                      ;Fin del procedimiento
+END MAIN                       ;Fin del programa
+
+
+
+; [SOURCE]: D:\emu8086\emu8086\Trabajos\Prog6.asm

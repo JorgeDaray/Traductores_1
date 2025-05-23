@@ -1,0 +1,24 @@
+PAGE 60,132          ;Numero de filas y columnas
+TITLE PROG3.EXE      ;Titulo del programa
+.MODEL SMALL         ;Habilita dos segmentos de 64kb.
+;___________________________________
+.CODE                ;Inicio del codigo
+ORG 100H             ;Direccion que inicia el ensamblador
+MAIN PROC NEAR       ;Directiva de inicio NEAR
+MOV AX,01        ;Mueve al registro AX el numero 1
+MOV BX,01        ;Mueve al registro BX el numero 1
+MOV CX,01        ;Mueve al registro CX el numero 1
+;___________________________________
+A20:                 ;Declaracion de funcion llamada A20
+ADD AX,01        ;Suma lo que contiene AX mas 1
+ADD BX, AX       ;Suma lo que contiene BX a AX
+SHL CX,1         ;Sirve para desplazar el operando a la izquierda en 1, si es derecha es SHR
+JMP A20          ;Hace saltos a la funcion A20 indefinidamente
+MOV AX,4C00H     ;Salida a DOS
+INT 21H          ;Interrupcion a funcion DOS
+MAIN ENDP            ;Fin del procedimiento
+END MAIN             ;Fin del programa
+
+
+
+; [SOURCE]: D:\emu8086\emu8086\Trabajos\Prog3.asm

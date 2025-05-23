@@ -1,0 +1,168 @@
+EMU8086 GENERATED LISTING. MACHINE CODE <- SOURCE.
+ 
+PROG10.exe_ -- emu8086 assembler version: 4.08  
+ 
+[ 17/03/2023  --  12:54:09 ] 
+ 
+===================================================================================================
+[LINE]     LOC: MACHINE CODE                          SOURCE
+===================================================================================================
+ 
+[   1]        :                                       PAGE 60,132          ;Numero de paginas programa
+[   2]        :                                       TITLE PRACT10.EXE    ;Nombre del programa
+[   3]        :                                       .MODEL SMALL         ;Habilita el segmento 64 bits
+[   4]        :                                       ;_____________________________________
+[   5]        :                                       .STACK 64            ;Habilita la pila
+[   6]        :                                       .DATA                ;Habilita el segmento de datos
+[   7]    0040: 01 00                                 REG0 DW 00001H  ;0FFFFH     ;Habilitamos el registro REG0
+[   8]    0042: 01 00                                 REG1 DW 00001H       ;Habilitamos el registro REG1
+[   9]    0044: 01 00                                 REG2 DW 00001H       ;Habilitamos el registro REG2
+[  10]    0046: 00                                    COLOR DB 00H         ;Registro para los colores
+[  11]    0047: 52 45 54 41 52 44 4F 24               MSJE DB "RETARDO","$" ;Cadena MSJE
+[  12]        :                                       ;_____________________________________
+[  13]        :                                       .CODE                ;Inicio del codigo
+[  14]    0050:                                       INICIO PROC FAR      ;Funcion principal INICIO
+[  15]    0050: B8 04 00                              MOV AX, @DATA        ;Mover el segmento de datos a AX
+[  16]    0053: 8E D8                                 MOV DS, AX           ;Movemos el valor de AX a DS
+[  17]    0055: E8 1B 00                              CALL PANT1           ;LLamada a funcion PANT1
+[  18]    0058: E8 3A 00                              CALL CAMBIO          ;LLamada a funcion CAMBIO
+[  19]    005B: E8 2D 00                              CALL CURSOR1         ;LLamada a funcion CURSOR1
+[  20]    005E: B8 00 4C                              MOV AX,4C00H         ;Movemos el valor 4C00h a AX
+[  21]    0061: CD 21                                 INT 21H              ;Interrupcion 21H
+[  22]        :                                       INICIO ENDP          ;Terminamos la funcion inicio
+[  23]        :                                       ;_____________________________________
+[  24]    0063:                                       PANT0 PROC NEAR      ;Inicio de la funcion PANT0
+[  25]    0063: B8 00 06                              MOV AX,0600H         ;Movemos el valor 0600H a AX
+[  26]    0066: 8A 3E 06 00                           MOV BH, COLOR        ;Movemos el valor de COLOR a BH
+[  27]    006A: B9 05 02                              MOV CX,0205H         ;Movemos el valor 0205H a CX
+[  28]    006D: BA 45 15                              MOV DX,1545H         ;Movemos el valor 1545H a DX
+[  29]    0070: CD 10                                 INT 10H              ;Interrupcion 10H
+[  30]    0072: C3                                    RET                  ;Retornamos a la funcion principal
+[  31]        :                                       PANT0 ENDP           ;Fin de PANT0
+[  32]        :                                       ;_____________________________________
+[  33]    0073:                                       PANT1 PROC NEAR      ;Inicio de la funcion PANT1
+[  34]    0073: B8 00 06                              MOV AX,0600H         ;Movemos el valor 0600H a AX
+[  35]    0076: B7 10                                 MOV BH,10H           ;Movemos el valor 10H a BH
+[  36]    0078: B9 00 00                              MOV CX,0000H         ;Movemos el valor 0000H a CX
+[  37]    007B: BA 50 19                              MOV DX,1950H         ;Movemos el valor 1950H a DX
+[  38]    007E: CD 10                                 INT 10H              ;Interrupcion 10H
+[  39]    0080: C3                                    RET                  ;Retornar a la funcion principal
+[  40]        :                                       PANT1 ENDP           ;Fin de PANT1
+[  41]        :                                       ;____________________________________
+[  42]    0081:                                       CURSOR0 PROC NEAR    ;Iniciamos la funcion CURSOR0
+[  43]    0081: B4 02                                 MOV AH,02H           ;Movemos el valor 02H a AH
+[  44]    0083: B7 00                                 MOV BH,00H           ;Movemos el valor 00H a BH
+[  45]    0085: BA 1A 0C                              MOV DX,0C1AH         ;Movemos el valor 0C1AH a DX
+[  46]    0088: CD 10                                 INT 10H              ;Interrupcion 10H
+[  47]    008A: C3                                    RET                  ;Retornamos a la funcion principal
+[  48]        :                                       CURSOR0 ENDP         ;Fin de CURSOR0
+[  49]        :                                       ;_____________________________________
+[  50]    008B:                                       CURSOR1 PROC NEAR    ;Inicio de funcion CURSOR1
+[  51]    008B: B4 02                                 MOV AH,02H           ;Movemos el valor 02H a AH
+[  52]    008D: B7 00                                 MOV BH,00H           ;Movemos el valor 00H a BH
+[  53]    008F: BA 00 14                              MOV DX,1400H         ;Movemos el valor 1400H a DX
+[  54]    0092: CD 10                                 INT 10H              ;Interrupcion 10H
+[  55]    0094: C3                                    RET                  ;Retornamos a la funcion principal
+[  56]        :                                       CURSOR1 ENDP         ;Fin de CURSOR1
+[  57]        :                                       ;_____________________________________
+[  58]    0095:                                       CAMBIO PROC NEAR     ;Inicio de funcion CAMBIO
+[  59]    0095: E8 CB FF                              CALL PANT0           ;Llamada a funcion CURSOR0
+[  60]    0098: E8 E6 FF                              CALL CURSOR0         ;Llamada a funcion PANT0
+[  61]    009B: E8 1A 00                              CALL DESP            ;Llamada a funcion DESP
+[  62]    009E: E8 1F 00                              CALL RETARd         ;Llamada a funcion RETARd
+[  63]    00A1: E8 44 00                              CALL RETARi         ;Llamada a funcion RETARi
+[  64]    00A4: E8 19 00                              CALL RETARd         ;Llamada a funcion RETARd
+[  65]    00A7: E8 3E 00                              CALL RETARi         ;Llamada a funcion RETARi
+[  66]    00AA: FE 06 06 00                           INC COLOR            ;Incrementador de COLOR
+[  67]    00AE: 80 3E 06 00 FF                        CMP COLOR,0FFH       ;Comparamos el valor 0FFH con COLOR
+[  68]    00B3: 74 02                                 JE SALE              ;Saltamos a la funcion SALE si ZF es 1
+[  69]    00B5: EB DE                                 JMP CAMBIO           ;Salto a la funcion CAMBIO
+[  70]    00B7: C3                                    SALE: RET            ;Inicia la funcion SALE y retorna
+[  71]        :                                       CAMBIO ENDP          ;Terminamos la funcion CAMBIO
+[  72]        :                                       ;_____________________________________
+[  73]    00B8:                                       DESP PROC NEAR       ;Inicia la funcion DESP
+[  74]    00B8: B4 09                                 MOV AH,09H           ;Movemos el valor 09H a AH
+[  75]    00BA: BA 07 00                              LEA DX, MSJE         ;Cargamos el valor de MSJE a DX
+[  76]    00BD: CD 21                                 INT 21H              ;Interrupcion 21H
+[  77]    00BF: C3                                    RET                  ;Retornamos a la funcion principal
+[  78]        :                                       DESP ENDP            ;Fin de DESP
+[  79]        :                                       ;_____________________________________
+[  80]    00C0:                                       RETARd PROC NEAR     ;Inicio de la funcion RETARd
+[  81]    00C0: FF 0E 00 00                           DECR0: DEC REG0      ;Iniciamos la funcion DECR0;decrementa REG0
+[  82]    00C4: 83 3E 00 00 00                        CMP REG0,00000H      ;Comparamos REG0 con 00000H
+[  83]    00C9: 74 02                                 JE DECR1             ;Saltamos a la funcion DECR1 si ZF es 1
+[  84]    00CB: EB F3                                 JMP DECR0            ;Salto a DECR0
+[  85]    00CD: FF 0E 02 00                           DECR1: DEC REG1      ;Inicio de DECR1;Decrementamos REG1
+[  86]    00D1: 83 3E 02 00 00                        CMP REG1,00000H      ;Comparamos REG1 con 00000H
+[  87]    00D6: 74 02                                 JE DECR2             ;Saltamos a la funcion DECR2 si ZF es 1
+[  88]    00D8: EB F3                                 JMP DECR1            ;Salto a DECR1
+[  89]    00DA: FF 0E 04 00                           DECR2: DEC REG2      ;Inicio de DECR2;Decrementamos REG2
+[  90]    00DE: 83 3E 04 00 00                        CMP REG2,00000H      ;Comparamos REG2 con 00000H
+[  91]    00E3: 74 02                                 JE SALIR0            ;Saltamos a la funcion SALIR0 si ZF es 1
+[  92]    00E5: EB F3                                 JMP DECR2            ;Salto a DECR2
+[  93]    00E7: C3                                    SALIR0: RET          ;Inicia la funcion SALIR0 y retornamos
+[  94]        :                                       RETARd ENDP          ;Fin de RETARd
+[  95]        :                                       ;_____________________________________
+[  96]    00E8:                                       RETARi PROC NEAR     ;Inicio de la funcion RETARi
+[  97]    00E8: FF 06 00 00                           INCR0: INC REG0      ;Iniciamos la funcion INCR0;Incrementamos REG0
+[  98]    00EC: 83 3E 00 00 05                        CMP REG0,00005H   ;0FFFFH   ;Comparamos REG0 con 0FFFFH
+[  99]    00F1: 74 02                                 JE INCR1             ;Saltamos a la funcion INCR1 si ZF es 1
+[ 100]    00F3: EB F3                                 JMP INCR0            ;Salto a INCR0
+[ 101]    00F5: FF 06 02 00                           INCR1: INC REG1      ;Inicio de INCR1;Incrementamos REG1
+[ 102]    00F9: 83 3E 02 00 05                        CMP REG1,00005H      ;Comparamos REG1 con 0FFFFH
+[ 103]    00FE: 74 02                                 JE INCR2             ;Saltamos a la funcion INCR2 si ZF es 1
+[ 104]    0100: EB F3                                 JMP INCR1            ;Salto a INCR1
+[ 105]    0102: FF 06 04 00                           INCR2: INC REG2      ;Inicio de INCR2;Incrementamos REG2
+[ 106]    0106: 83 3E 04 00 05                        CMP REG2,00005H      ;Comparamos REG2 con 0FFFFH
+[ 107]    010B: 74 02                                 JE SALIR1            ;Saltamos a la funcion SALIR1 si ZF es 1
+[ 108]    010D: EB F3                                 JMP INCR2            ;Salto a INCR2
+[ 109]    010F: C3                                    SALIR1: RET          ;Inicia la funcion SALIR1 y retornamos
+[ 110]        :                                       RETARi ENDP          ;Fin de RETARi
+[ 111]        :                                       ;_____________________________________
+[ 112]        :                                       END INICIO           ;Terminamos la funcion INICIO
+[ 113]        :                                       
+ 
+===================================================================================================
+ 
+EXE HEADER - bytes from 0000 to 01FF inclusive.
+
+0000: 4D      -   exe signature (M)
+0001: 5A      -   exe signature (Z)
+0002: 10      -   bytes on last page (l.byte)
+0003: 01      -   bytes on last page (h.byte)
+0004: 02      -   512 byte pages in file (l.byte)
+0005: 00      -   512 byte pages in file (h.byte)
+0006: 01      -   relocations (l.byte)
+0007: 00      -   relocations (h.byte)
+0008: 20      -   paragraphs in header (l.byte)
+0009: 00      -   paragraphs in header (h.byte)
+000A: 00      -   minimum memory (l.byte)
+000B: 00      -   minimum memory (h.byte)
+000C: FF      -   maximum memory (l.byte)
+000D: FF      -   maximum memory (h.byte)
+000E: 00      -   SS - stack segment (l.byte)
+000F: 00      -   SS - stack segment (h.byte)
+0010: 40      -   SP - stack pointer (l.byte)
+0011: 00      -   SP - stack pointer (h.byte)
+0012: B8      -   check sum (l.byte)
+0013: 48      -   check sum (h.byte)
+0014: 00      -   IP - instruction pointer (l.byte)
+0015: 00      -   IP - instruction pointer (h.byte)
+0016: 05      -   CS - code segment (l.byte)
+0017: 00      -   CS - code segment (h.byte)
+0018: 1E      -   relocation table adress (l.byte)
+0019: 00      -   relocation table adress (h.byte)
+001A: 00      -   overlay number (l.byte)
+001B: 00      -   overlay number (h.byte)
+001C: 01      -   signature (l.byte)
+001D: 00      -   signature (h.byte)
+001E: 01      -   relocation table - offset inside segment (l.byte)
+001F: 00      -   relocation table - offset inside segment (h.byte)
+0020: 05      -   relocation table - segment anchor (l.byte)
+0021: 00      -   relocation table - segment anchor (h.byte)
+0022 to 01FF  -   reserved relocation area  (00) 
+
+
+
+
+===================================================================================================

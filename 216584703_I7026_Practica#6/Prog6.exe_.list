@@ -1,0 +1,100 @@
+EMU8086 GENERATED LISTING. MACHINE CODE <- SOURCE.
+ 
+Prog6.exe_ -- emu8086 assembler version: 4.08  
+ 
+[ 04/03/2023  --  0:50:23 ] 
+ 
+===================================================================================================
+[LINE]     LOC: MACHINE CODE                          SOURCE
+===================================================================================================
+ 
+[   1]        :                                       PAGE 60,132                    ;Numero de filas y columnas
+[   2]        :                                       TITLE PROG6.EXE                ;Titulo del programa
+[   3]        :                                       .MODEL SMALL                   ;Habilita dos segmentos de 64kb.
+[   4]        :                                       ;_____________________________________
+[   5]        :                                       .STACK 64                      ;Definicion del segmento de pila
+[   6]        :                                       .DATA                          ;Definicion del segmento de datos
+[   7]    0040: 43 41 4D 42 49 41 52 20 41 20 4D 49   MEN DB 'CAMBIAR A MINUSCULAS'  ;Definicion del string a usar
+                4E 55 53 43 55 4C 41 53             
+[   8]        :                                       ;_____________________________________
+[   9]        :                                       .CODE                          ;Inicio del codigo
+[  10]    0060:                                       MAIN PROC NEAR                 ;Directiva de inicio NEAR
+[  11]    0060: B8 04 00                              MOV AX,@DATA               ;Se le asigna el valora la direccion DATA
+[  12]    0063: 8E D8                                 MOV DS,AX                  ;Mover AX a DS
+[  13]    0065: BB 00 00                              LEA BX, MEN                ;Mover el contenido de MEN a BX
+[  14]    0068: B9 14 00                              MOV CX,20                  ;Mover 20 al registro CX
+[  15]        :                                       ;_____________________________________
+[  16]    006B:                                       OTRO:                          ;Inicio de la funcion OTRO
+[  17]    006B: 8A 27                                 MOV AH,[BX]                ;Movemos lo del registro a la cadena BX
+[  18]    006D: 80 FC 41                              CMP AH,41H                 ;Comparamos el valor 41H en ascii(A) con AH
+[  19]    0070: 72 19                                 JB OTRO2                   ;Salto a la funcion OTRO2 solo si flag CF es 1
+[  20]    0072: 80 FC 5A                              CMP AH,5AH                 ;Comparamos el valor 5AH en ascii(Z) con AH
+[  21]    0075: 77 14                                 JA OTRO2                   ;Salto a la funcion OTRO2 solo si flag CF es 0
+[  22]    0077: 80 CC 20                              OR AH,00100000B            ;El equivalente para convertir de mayúsculas a minúsculas
+[  23]        :                                       ;corresponde a sumar 32 al valor de AH (b5=1)
+[  24]    007A: 88 27                                 MOV [BX],AH                ;Mover lo de la cadena BX a AH
+[  25]        :                                       ;Inicia funcion para convertir de minus a mayus
+[  26]    007C: 80 FC 61                              CMP AH,61H                 ;Comparamos el valor 61H en ascii(a) con AH
+[  27]    007F: 72 0A                                 JB OTRO2
+[  28]    0081: 80 FC 7A                              CMP AH,7AH                 ;Comparamos el valor 7AH en ascii(z) con AH
+[  29]    0084: 77 05                                 JA OTRO2
+[  30]    0086: 80 E4 DF                              AND AH,11011111B           ;La diferencia entre una letra minúscula y su equivalente
+[  31]        :                                       ;en mayúscula en Código ASCII es 32 (b5=0)
+[  32]    0089: 88 27                                 MOV [BX],AH
+[  33]        :                                       ;_____________________________________
+[  34]    008B:                                       OTRO2:                         ;Inicio de funcion OTRO2
+[  35]    008B: 43                                    INC BX                     ;Incrementador de BX en 1
+[  36]    008C: E2 DD                                 LOOP OTRO                  ;Salto a la funcion OTRO para convertir
+[  37]        :                                       ;de mayus a minus, y viceversa
+[  38]    008E: EB D0                                 JMP .CODE                  ;Bucle indefinido que retorna a .CODE
+[  39]        :                                       ;para nomas repetir nuestra oracion
+[  40]    0090: B8 00 4C                              MOV AX,4C00H               ;Salida a DOS
+[  41]    0093: CD 21                                 INT 21H                    ;Interrupcion 21H
+[  42]        :                                       MAIN ENDP                      ;Fin del procedimiento
+[  43]        :                                       END MAIN                       ;Fin del programa
+[  44]        :                                       
+ 
+===================================================================================================
+ 
+EXE HEADER - bytes from 0000 to 01FF inclusive.
+
+0000: 4D      -   exe signature (M)
+0001: 5A      -   exe signature (Z)
+0002: 95      -   bytes on last page (l.byte)
+0003: 00      -   bytes on last page (h.byte)
+0004: 02      -   512 byte pages in file (l.byte)
+0005: 00      -   512 byte pages in file (h.byte)
+0006: 01      -   relocations (l.byte)
+0007: 00      -   relocations (h.byte)
+0008: 20      -   paragraphs in header (l.byte)
+0009: 00      -   paragraphs in header (h.byte)
+000A: 00      -   minimum memory (l.byte)
+000B: 00      -   minimum memory (h.byte)
+000C: FF      -   maximum memory (l.byte)
+000D: FF      -   maximum memory (h.byte)
+000E: 00      -   SS - stack segment (l.byte)
+000F: 00      -   SS - stack segment (h.byte)
+0010: 40      -   SP - stack pointer (l.byte)
+0011: 00      -   SP - stack pointer (h.byte)
+0012: 29      -   check sum (l.byte)
+0013: F1      -   check sum (h.byte)
+0014: 00      -   IP - instruction pointer (l.byte)
+0015: 00      -   IP - instruction pointer (h.byte)
+0016: 06      -   CS - code segment (l.byte)
+0017: 00      -   CS - code segment (h.byte)
+0018: 1E      -   relocation table adress (l.byte)
+0019: 00      -   relocation table adress (h.byte)
+001A: 00      -   overlay number (l.byte)
+001B: 00      -   overlay number (h.byte)
+001C: 01      -   signature (l.byte)
+001D: 00      -   signature (h.byte)
+001E: 01      -   relocation table - offset inside segment (l.byte)
+001F: 00      -   relocation table - offset inside segment (h.byte)
+0020: 06      -   relocation table - segment anchor (l.byte)
+0021: 00      -   relocation table - segment anchor (h.byte)
+0022 to 01FF  -   reserved relocation area  (00) 
+
+
+
+
+===================================================================================================

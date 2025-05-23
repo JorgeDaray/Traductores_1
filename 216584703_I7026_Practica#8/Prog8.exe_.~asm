@@ -1,0 +1,90 @@
+PAGE 60,132          ;Inicializacion del codigo
+TITLE PROG8.EXE
+.MODEL SMALL
+.STACK 64
+;_____________________________________
+.DATA                 ;Asignacion de valores
+ENTRA LABEL BYTE
+LONMAX DB 20
+LONREAL DB ?
+INTROD DB 21 DUP (' ')
+MEN DB 'INTRODUCIR NOMBRE: ' , ''
+;_____________________________________
+.CODE
+BEGIN PROC FAR
+MOV AX, @DATA
+MOV DS, AX
+OTRO:
+CALL PANT0            ;Funcion con llamadas a funciones
+MOV DX,0502H
+CALL CURS0
+CALL DESPL0
+CALL TECLA0
+CMP LONREAL,00
+JE SALIR
+CALL CAMPA
+CALL CENTRAR
+JMP OTRO
+SALIR: MOV AX,4C00H
+INT 21H
+BEGIN ENDP
+
+;_____________________________________
+DESPL0 PROC NEAR        ;desplegar video
+MOV AH,09H
+LEA DX, MEN
+INT 21H
+RET
+DESPL0 ENDP
+;_____________________________________
+TECLA0 PROC NEAR        ;Inicializar la funcion TECLA0
+MOV AH,0AH              ;Movemos e valor de 0AH a DX(Directiva)
+LEA DX, ENTRA           ;Cargamos el operando Entra a DX
+INT 21H                 ;Interrupcion 21 H
+RET                     ;Retornamos a otro
+TECLA0 ENDP             ;Finalizar la funcion TECLA0
+;_____________________________________
+CAMPA PROC NEAR         ;Inicializar la funcion CAMPA
+MOV BH,00               ;Movemos 00 a BH (Directiva)
+MOV BL, LONREAL         ;Movemos lo que tenemos en LONREAL a BL
+MOV INTROD[BX],07H      ;Introducimos un 07H(sonido de campana) a BX
+MOV INTROD[BX+1],'$'    ;Introducimos un '$' a BX+1
+RET                     ;Retornamos a OTRO
+CAMPA ENDP              ;Finalizar la funcion CAMPA
+;_____________________________________
+CENTRAR PROC NEAR       ;Inicializa la funcion CENTRAR
+MOV DL, LONREAL         ;Movemos lo que tiene LONREAL a DL
+SHR DL,1                ;Desplazamos 1 a la derecha en DL
+NEG DL                  ;Negamos DL
+ADD DL,40               ;Sumamos 40 a DL para poder centrar
+MOV DH,12               ;Movemos 12 a DH
+CALL CURS0              ;Llamada a CURS0
+MOV AH,09H              ;Funcion para desplegar una cadena
+LEA DX, INTROD          ;Cargamos el operando de INTROD a DX
+INT 21H                 ;Interrupcion 21H
+RET                     ;Retornamos a OTRO
+CENTRAR ENDP            ;Centrar finaliza
+
+;_____________________________________
+PANT0 PROC NEAR
+MOV AX,0600H
+MOV BH,30
+MOV CX,0000
+MOV DX,184FH
+INT 10H
+RET
+PANT0 ENDP
+
+;_____________________________________
+CURS0 PROC NEAR
+MOV AH,02H
+MOV BH,00
+INT 10H
+RET
+CURS0 ENDP
+;_____________________________________
+END BEGIN
+
+
+
+; [SOURCE]: D:\emu8086\emu8086\Trabajos\Prog8.asm

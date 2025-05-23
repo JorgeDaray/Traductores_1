@@ -1,0 +1,35 @@
+PAGE 60,132         ; Numero de lineas y filas
+TITLE PROG5.EXE     ;Nombre del programa
+.MODEL SMALL        ;Habilita 2 segmentos de 64kb.
+;_____________________________________
+
+.STACK 64           ;Definicion del segmento pila
+.DATA               ;Definicion del segmento datos
+;_____________________________________
+.CODE               ;Comienzo del codigo
+BEGIN PROC FAR      ;Inicio de funcion BEGIN
+MOV AX,01H          ;Movemos a AX el valor 01hexa
+MOV BX,01H          ;Movemos a BX el valor 01 hexa
+CALL B10            ;LLamamos a la funcion B10
+MOV AX,4C00H        ;Movemos el a el valor 4C00H
+INT 21H             ;Interrupcion 21H
+BEGIN ENDP          ;Termina la funcion BEGIN
+;_____________________________________
+B10 PROC NEAR       ;Inicio de la funcion B10
+MOV CX,01H          ;Movemos a CX el valor 01hexa
+CALL C10            ;LLamamos a la funcion C10
+SHL CX,1            ;Recorremos un valor a la izquierda en CX
+RET                 ;Retornamos a la afuncion anterior
+B10 ENDP            ;Termina la funcion B10
+;_____________________________________
+C10 PROC NEAR       ;Inicia la funcion C10
+ADD AX,01H          ;Sumamos lo que hay en AX y 01 hexa
+ADD BX, AX          ;Sumamos lo que hay en BX y AX
+RET                 ;Retornamos a la afuncion anterior
+C10 ENDP            ;Termina la funcion C10
+;_____________________________________
+END BEGIN           ;Fin del programa
+
+
+
+; [SOURCE]: D:\emu8086\emu8086\Trabajos\Prog5.asm

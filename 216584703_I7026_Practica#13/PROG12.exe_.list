@@ -1,0 +1,234 @@
+EMU8086 GENERATED LISTING. MACHINE CODE <- SOURCE.
+ 
+PROG12.exe_ -- emu8086 assembler version: 4.08  
+ 
+[ 26/03/2023  --  22:46:19 ] 
+ 
+===================================================================================================
+[LINE]     LOC: MACHINE CODE                          SOURCE
+===================================================================================================
+ 
+[   1]        :                                       PAGE 60,132
+[   2]        :                                       
+[   3]        :                                       TITLE   P11SELMU (EXE)
+[   4]        :                                       
+[   5]        :                                       .MODEL SMALL
+[   6]        :                                       .STACK 64
+[   7]        :                                       
+[   8]        :                                       .DATA
+[   9]        :                                       TOPROW EQU 00
+[  10]        :                                       BOTROW EQU 07
+[  11]        :                                       LEFCOL EQU 16
+[  12]    0040: 00                                    COL DB 00
+[  13]    0041: 00                                    ROW DB 00
+[  14]    0042: 00                                    COUNT DB ?
+[  15]    0043: 00                                    LINES DB ?
+[  16]    0044: 00                                    ATTRIB DB ?
+[  17]    0045: 13                                    NINTEEN DB 19
+[  18]    0046: C9 CD CD CD CD CD CD CD CD CD CD CD   MENU DB 0C9H, 17 DUP(0CDH), 0BBH
+                CD CD CD CD CD CD BB                
+[  19]    0059: BA 20 41 64 64 20 72 65 63 6F 72 64   DB 0BAH, ' Add records     ', 0BAH
+                73 20 20 20 20 20 BA                
+[  20]    006C: BA 20 44 65 6C 65 74 65 20 72 65 63   DB 0BAH, ' Delete records  ', 0BAH
+                6F 72 64 73 20 20 BA                
+[  21]    007F: BA 20 45 6E 74 65 72 20 6F 72 64 65   DB 0BAH, ' Enter orders    ', 0BAH
+                72 73 20 20 20 20 BA                
+[  22]    0092: BA 20 50 72 69 6E 74 20 72 65 70 6F   DB 0BAH, ' Print report    ', 0BAH
+                72 74 20 20 20 20 BA                
+[  23]    00A5: BA 20 55 70 64 61 74 65 20 72 65 63   DB 0BAH, ' Update records  ', 0BAH
+                6F 72 64 73 20 20 BA                
+[  24]    00B8: BA 20 56 69 65 77 20 72 65 63 6F 72   DB 0BAH, ' View records    ', 0BAH
+                64 73 20 20 20 20 BA                
+[  25]    00CB: C8 CD CD CD CD CD CD CD CD CD CD CD   DB 0C8H, 17 DUP(0CDH), 0BCH
+                CD CD CD CD CD CD BC                
+[  26]    00DE: 09 54 6F 20 73 65 6C 65 63 74 20 61   PROMPT DB 09, 'To select an item, use up/down arrow'
+                6E 20 69 74 65 6D 2C 20 75 73 65 20 
+                75 70 2F 64 6F 77 6E 20 61 72 72 6F 
+                77                                  
+[  27]    0103: 20 61 6E 64 20 70 72 65 73 73 20 45   DB ' and press Enter.'
+                6E 74 65 72 2E                      
+[  28]    0114: 0D 0A 09 50 72 65 73 73 20 45 73 63   DB 13, 10, 09, 'Press Esc to exit$'
+                20 74 6F 20 65 78 69 74 24          
+[  29]        :                                       
+[  30]        :                                       
+[  31]    0129:                                       BEGIN PROC FAR
+[  32]    0129: B8 04 00                              MOV AX, @DATA
+[  33]    012C: 8E D8                                 MOV DS, AX
+[  34]    012E: 8E C0                                 MOV ES, AX
+[  35]    0130: E8 1F 01                              CALL Q10CLR
+[  36]    0133: C6 06 01 00 09                        MOV ROW, BOTROW + 2
+[  37]    0138: C6 06 00 00 00                        MOV COL, 00
+[  38]    013D: E8 1F 01                              CALL Q20CURS
+[  39]    0140: B4 40                                 MOV AH, 40H
+[  40]    0142: BB 01 00                              MOV BX, 01
+[  41]    0145: B9 4B 00                              MOV CX, 75
+[  42]    0148: BA 9E 00                              LEA DX, PROMPT
+[  43]    014B: CD 21                                 INT 21H
+[  44]    014D:                                       A10LOOP:
+[  45]    014D: E8 27 00                              CALL B10MENU
+[  46]    0150: C6 06 00 00 11                        MOV COL, LEFCOL+1
+[  47]    0155: E8 07 01                              CALL Q20CURS
+[  48]    0158: C6 06 01 00 01                        MOV ROW, TOPROW+1
+[  49]    015D: C6 06 04 00 16                        MOV ATTRIB,16H
+[  50]    0162: E8 B4 00                              CALL H10DISP
+[  51]    0165: E8 51 00                              CALL D10INPT
+[  52]    0168: 3C 0D                                 CMP AL, 0DH
+[  53]    016A: 74 E1                                 JE A10LOOP
+[  54]    016C: B8 00 06                              MOV AX, 0600H
+[  55]    016F: E8 E0 00                              CALL Q10CLR
+[  56]    0172: B8 00 4C                              MOV AX, 4C00H
+[  57]    0175: CD 21                                 INT 21H
+[  58]        :                                       BEGIN ENDP
+[  59]        :                                       
+[  60]    0177:                                       B10MENU PROC NEAR
+[  61]    0177: C6 06 01 00 00                        MOV ROW, TOPROW
+[  62]    017C: C6 06 03 00 08                        MOV LINES, 08
+[  63]    0181: BE 06 00                              LEA SI, MENU
+[  64]    0184: C6 06 04 00 71                        MOV ATTRIB, 71H
+[  65]    0189:                                       B20:
+[  66]    0189: C6 06 00 00 10                        MOV COL, LEFCOL
+[  67]    018E: C6 06 02 00 13                        MOV COUNT, 19
+[  68]    0193:                                       B30:
+[  69]    0193: E8 C9 00                              CALL Q20CURS
+[  70]    0196: B4 09                                 MOV AH, 09H
+[  71]    0198: 8A 04                                 MOV AL, [SI]
+[  72]    019A: B7 00                                 MOV BH, 00
+[  73]    019C: B3 71                                 MOV BL, 71H
+[  74]    019E: B9 01 00                              MOV CX, 01
+[  75]    01A1: CD 10                                 INT 10H
+[  76]    01A3: FE 06 00 00                           INC COL
+[  77]    01A7: 46                                    INC SI
+[  78]    01A8: FE 0E 02 00                           DEC COUNT
+[  79]    01AC: 75 E5                                 JNZ B30
+[  80]    01AE: FE 06 01 00                           INC ROW
+[  81]    01B2: FE 0E 03 00                           DEC LINES
+[  82]    01B6: 75 D1                                 JNZ B20
+[  83]    01B8: C3                                    RET
+[  84]        :                                       B10MENU ENDP
+[  85]        :                                       
+[  86]    01B9:                                       D10INPT PROC NEAR
+[  87]    01B9: B4 01                                 MOV AH, 1
+[  88]    01BB: CD 16                                 INT 16H
+[  89]    01BD: 8A E7                                 MOV AH, BH
+[  90]    01BF: B4 00                                 MOV AH, 0
+[  91]    01C1: CD 16                                 INT 16H
+[  92]    01C3: 8A FC                                 MOV BH, AH
+[  93]    01C5: 80 FC 50                              CMP AH, 50H
+[  94]    01C8: 74 0F                                 JE D20
+[  95]    01CA: 80 FC 48                              CMP AH, 48H
+[  96]    01CD: 74 24                                 JE D30
+[  97]    01CF: 3C 0D                                 CMP AL, 0DH
+[  98]    01D1: 74 45                                 JE D90
+[  99]    01D3: 3C 1B                                 CMP AL, 1BH
+[ 100]    01D5: 74 41                                 JE D90
+[ 101]    01D7: EB E0                                 JMP D10INPT
+[ 102]    01D9: C6 06 04 00 71                        D20: MOV ATTRIB, 71H
+[ 103]    01DE: E8 38 00                              CALL H10DISP
+[ 104]    01E1: FE 06 01 00                           INC ROW
+[ 105]    01E5: 80 3E 01 00 06                        CMP ROW, BOTROW-1
+[ 106]    01EA: 76 1F                                 JBE D40
+[ 107]    01EC: C6 06 01 00 01                        MOV ROW, TOPROW+1
+[ 108]    01F1: EB 18                                 JMP D40
+[ 109]    01F3: C6 06 04 00 71                        D30: MOV ATTRIB, 71H
+[ 110]    01F8: E8 1E 00                              CALL H10DISP
+[ 111]    01FB: FE 0E 01 00                           DEC ROW
+[ 112]    01FF: 80 3E 01 00 01                        CMP ROW, TOPROW+1
+[ 113]    0204: 73 05                                 JAE D40
+[ 114]    0206: C6 06 01 00 06                        MOV ROW, BOTROW-1
+[ 115]    020B: E8 51 00                              D40: CALL Q20CURS
+[ 116]    020E: C6 06 04 00 16                        MOV ATTRIB, 16H
+[ 117]    0213: E8 03 00                              CALL H10DISP
+[ 118]    0216: EB A1                                 JMP D10INPT
+[ 119]    0218: C3                                    D90: RET
+[ 120]        :                                       D10INPT ENDP
+[ 121]        :                                       
+[ 122]        :                                       
+[ 123]    0219:                                       H10DISP PROC NEAR
+[ 124]    0219: B4 00                                 MOV AH, 00
+[ 125]    021B: A0 01 00                              MOV AL, ROW
+[ 126]    021E: F6 26 05 00                           MUL NINTEEN
+[ 127]    0222: BE 07 00                              LEA SI, MENU+1
+[ 128]    0225: 03 F0                                 ADD SI, AX
+[ 129]    0227: C6 06 02 00 11                        MOV COUNT, 17
+[ 130]    022C:                                       H20:
+[ 131]    022C: E8 30 00                              CALL Q20CURS
+[ 132]    022F: B4 09                                 MOV AH, 09H
+[ 133]    0231: 8A 04                                 MOV AL, [SI]
+[ 134]    0233: B7 00                                 MOV BH, 00
+[ 135]    0235: 8A 1E 04 00                           MOV BL, ATTRIB
+[ 136]    0239: B9 01 00                              MOV CX, 01
+[ 137]    023C: CD 10                                 INT 10H
+[ 138]    023E: FE 06 00 00                           INC COL
+[ 139]    0242: 46                                    INC SI
+[ 140]    0243: FE 0E 02 00                           DEC COUNT
+[ 141]    0247: 75 E3                                 JNZ H20
+[ 142]    0249: C6 06 00 00 11                        MOV COL, LEFCOL+1
+[ 143]    024E: E8 0E 00                              CALL Q20CURS
+[ 144]    0251: C3                                    RET
+[ 145]        :                                       H10DISP ENDP
+[ 146]        :                                       
+[ 147]    0252:                                       Q10CLR  PROC NEAR
+[ 148]    0252: B8 00 06                              MOV AX,0600H
+[ 149]    0255: B7 61                                 MOV BH,61H
+[ 150]    0257: B9 00 00                              MOV CX, 0000H
+[ 151]    025A: BA 4F 18                              MOV DX,184FH
+[ 152]    025D: CD 10                                 INT 10H
+[ 153]        :                                       Q10CLR ENDP
+[ 154]        :                                       
+[ 155]    025F:                                       Q20CURS PROC NEAR
+[ 156]    025F: B4 02                                 MOV AH, 02H
+[ 157]    0261: B7 00                                 MOV BH, 00H
+[ 158]    0263: 8A 36 01 00                           MOV DH, ROW
+[ 159]    0267: 8A 16 00 00                           MOV DL, COL
+[ 160]    026B: CD 10                                 INT 10H
+[ 161]    026D: C3                                    RET
+[ 162]        :                                       Q20CURS ENDP
+[ 163]        :                                       
+[ 164]        :                                       END BEGIN
+[ 165]        :                                       
+[ 166]        :                                       
+ 
+===================================================================================================
+ 
+EXE HEADER - bytes from 0000 to 01FF inclusive.
+
+0000: 4D      -   exe signature (M)
+0001: 5A      -   exe signature (Z)
+0002: 6E      -   bytes on last page (l.byte)
+0003: 00      -   bytes on last page (h.byte)
+0004: 03      -   512 byte pages in file (l.byte)
+0005: 00      -   512 byte pages in file (h.byte)
+0006: 01      -   relocations (l.byte)
+0007: 00      -   relocations (h.byte)
+0008: 20      -   paragraphs in header (l.byte)
+0009: 00      -   paragraphs in header (h.byte)
+000A: 00      -   minimum memory (l.byte)
+000B: 00      -   minimum memory (h.byte)
+000C: FF      -   maximum memory (l.byte)
+000D: FF      -   maximum memory (h.byte)
+000E: 00      -   SS - stack segment (l.byte)
+000F: 00      -   SS - stack segment (h.byte)
+0010: 40      -   SP - stack pointer (l.byte)
+0011: 00      -   SP - stack pointer (h.byte)
+0012: 24      -   check sum (l.byte)
+0013: 4F      -   check sum (h.byte)
+0014: E9      -   IP - instruction pointer (l.byte)
+0015: 00      -   IP - instruction pointer (h.byte)
+0016: 04      -   CS - code segment (l.byte)
+0017: 00      -   CS - code segment (h.byte)
+0018: 1E      -   relocation table adress (l.byte)
+0019: 00      -   relocation table adress (h.byte)
+001A: 00      -   overlay number (l.byte)
+001B: 00      -   overlay number (h.byte)
+001C: 01      -   signature (l.byte)
+001D: 00      -   signature (h.byte)
+001E: EA      -   relocation table - offset inside segment (l.byte)
+001F: 00      -   relocation table - offset inside segment (h.byte)
+0020: 04      -   relocation table - segment anchor (l.byte)
+0021: 00      -   relocation table - segment anchor (h.byte)
+0022 to 01FF  -   reserved relocation area  (00) 
+
+
+
+
+===================================================================================================

@@ -1,0 +1,61 @@
+PAGE 60,132          ;Numero de lineas y columnas
+TITLE PROG7.EXE      ;Nombre del programa
+.MODEL SMALL         ;Habilita dos segmentos de 64kb.
+.STACK 64            ;Definicion del segmento de pila
+;_____________________________________
+
+.DATA                ;Definicion del segmento de datos
+
+ETIQ DB 'JORGE DARAY PADILLA PEREZ', '$' ;Etiqueta de cadena a usar
+;_____________________________________
+.CODE                ;Inicio del codigo
+BEGIN PROC FAR       ;Directiva de inicio FAR
+MOV AX, @DATA        ;Se le asigna el valor de AX a la direccion DATA
+MOV DS, AX           ;Mover AX a DS
+CALL PANT0           ;LLamada a PANT0
+CALL PANT2           ;Llamada a PANT2
+CALL CURSOR          ;Llamada a CURSOR
+CALL DESPL0          ;Llamada a DESPL0
+MOV AX,4C00H         ;Salida a DOS
+INT 21H              ;Interrupcion 21H
+BEGIN ENDP           ;Fin de BEGIN
+;_____________________________________
+PANT0 PROC NEAR      ;Iniciamos la funcion PANT0 directiva NEAR
+MOV AX,0600H         ;Movemos el valor 0600H al registro AX(Parametros)
+MOV BH,0F0H          ;Se escoge el color blanco del fondo
+MOV CX,0000H         ;Filas y columnas de la izquierda a buscar
+MOV DX,184FH         ;Filas y columnas de la derecha a buscar
+INT 10H              ;Interuupcion 10H
+RET                  ;Retornamos a la funcion BEGIN
+PANT0 ENDP           ;Finaliza la funcion PANT0
+;_____________________________________
+PANT2 PROC NEAR      ;Iniciamos la funcio PANT2
+MOV AX,0600H         ;Movemos el valor 0600H al registro AX(Parametros)
+MOV BH,09H           ;Se escoge 09H 0 para el cuadro negro, y 9 para las letras en azul
+MOV CX,0808H         ;Filas y columnas de la izquierda a buscar
+MOV DX,122FH         ;Filas y columnas de la derecha a buscar
+INT 10H              ;Interuupcion 10H
+RET                  ;Retornamos a la funcion BEGIN
+PANT2 ENDP           ;Finaliza la funcion PANT2
+;_____________________________________
+CURSOR PROC NEAR     ;Iniciamos la funcion CURSOR
+MOV AH,02H           ;Movemos el valor de 02H (Cursor)
+MOV BH,00            ;Movemos el registro 00 al registro BH (pagina)
+MOV DX,0D0FH         ;Movemos el valor de 0D0FH a DX (posicion)
+INT 10H              ;Interuupcion 10H
+RET                  ;Retornamos a la funcion BEGIN
+CURSOR ENDP          ;Finaliza la funcion CURSOR
+
+;_____________________________________
+DESPL0 PROC NEAR     ;Iniciamos la funcion DESPL0
+MOV AH,09H           ;Movemos el valor 09H al registro AH
+LEA DX, ETIQ         ;Cargamos la ETIQ al registro DX
+INT 21H              ;Interrupcion 21H
+RET                  ;Retornamos a la funcion BEGIN
+DESPL0 ENDP          ;Fin de DESPL0
+;_____________________________________
+END BEGIN            ;Fin de BEGIN
+
+
+
+; [SOURCE]: D:\emu8086\emu8086\Trabajos\Prog7.asm

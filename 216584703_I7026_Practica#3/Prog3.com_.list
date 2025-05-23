@@ -1,0 +1,39 @@
+EMU8086 GENERATED LISTING. MACHINE CODE <- SOURCE.
+ 
+Prog3.com_ -- emu8086 assembler version: 4.08  
+ 
+[ 27/02/2023  --  23:47:13 ] 
+ 
+===================================================================================================
+[LINE]     LOC: MACHINE CODE                          SOURCE
+===================================================================================================
+ 
+[   1]        :                                       PAGE 60,132          ;Numero de filas y columnas
+[   2]        :                                       TITLE PROG3.EXE      ;Titulo del programa
+[   3]        :                                       .MODEL SMALL         ;Habilita dos segmentos de 64kb.
+[   4]        :                                       ;___________________________________
+[   5]        :                                       .CODE                ;Inicio del codigo
+[   6]        :                                       ORG 100H             ;Direccion que inicia el ensamblador
+[   7]    0100:                                       MAIN PROC NEAR       ;Directiva de inicio NEAR
+[   8]    0100: B8 01 00                              MOV AX,01        ;Mueve al registro AX el numero 1
+[   9]    0103: BB 01 00                              MOV BX,01        ;Mueve al registro BX el numero 1
+[  10]    0106: B9 01 00                              MOV CX,01        ;Mueve al registro CX el numero 1
+[  11]        :                                       ;___________________________________
+[  12]    0109:                                       A20:                 ;Declaracion de funcion llamada A20
+[  13]    0109: 05 01 00                              ADD AX,01        ;Suma lo que contiene AX mas 1
+[  14]    010C: 03 D8                                 ADD BX, AX       ;Suma lo que contiene BX a AX
+[  15]    010E: D1 E1                                 SHL CX,1         ;Sirve para desplazar el operando a la izquierda en 1, si es derecha es SHR
+[  16]    0110: EB F7                                 JMP A20          ;Hace saltos a la funcion A20 indefinidamente
+[  17]    0112: B8 00 4C                              MOV AX,4C00H     ;Salida a DOS
+[  18]    0115: CD 21                                 INT 21H          ;Interrupcion a funcion DOS
+[  19]        :                                       MAIN ENDP            ;Fin del procedimiento
+[  20]        :                                       END MAIN             ;Fin del programa
+[  21]        :                                       
+ 
+===================================================================================================
+ 
+
+
+
+
+===================================================================================================

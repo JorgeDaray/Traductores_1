@@ -1,0 +1,116 @@
+PAGE 60,132          ;Numero de paginas programa
+TITLE PRACT10.EXE    ;Nombre del programa
+.MODEL SMALL         ;Habilita el segmento 64 bits
+;_____________________________________
+.STACK 64            ;Habilita la pila
+.DATA                ;Habilita el segmento de datos
+REG0 DW 00001H  ;0FFFFH     ;Habilitamos el registro REG0
+REG1 DW 00001H       ;Habilitamos el registro REG1
+REG2 DW 00001H       ;Habilitamos el registro REG2
+COLOR DB 00H         ;Registro para los colores
+MSJE DB "RETARDO","$" ;Cadena MSJE
+;_____________________________________
+.CODE                ;Inicio del codigo
+INICIO PROC FAR      ;Funcion principal INICIO
+MOV AX, @DATA        ;Mover el segmento de datos a AX
+MOV DS, AX           ;Movemos el valor de AX a DS
+CALL PANT1           ;LLamada a funcion PANT1
+CALL CAMBIO          ;LLamada a funcion CAMBIO
+CALL CURSOR1         ;LLamada a funcion CURSOR1
+MOV AX,4C00H         ;Movemos el valor 4C00h a AX
+INT 21H              ;Interrupcion 21H
+INICIO ENDP          ;Terminamos la funcion inicio
+;_____________________________________
+PANT0 PROC NEAR      ;Inicio de la funcion PANT0
+MOV AX,0600H         ;Movemos el valor 0600H a AX
+MOV BH, COLOR        ;Movemos el valor de COLOR a BH
+MOV CX,0205H         ;Movemos el valor 0205H a CX
+MOV DX,1545H         ;Movemos el valor 1545H a DX
+INT 10H              ;Interrupcion 10H
+RET                  ;Retornamos a la funcion principal
+PANT0 ENDP           ;Fin de PANT0
+;_____________________________________
+PANT1 PROC NEAR      ;Inicio de la funcion PANT1
+MOV AX,0600H         ;Movemos el valor 0600H a AX
+MOV BH,10H           ;Movemos el valor 10H a BH
+MOV CX,0000H         ;Movemos el valor 0000H a CX
+MOV DX,1950H         ;Movemos el valor 1950H a DX
+INT 10H              ;Interrupcion 10H
+RET                  ;Retornar a la funcion principal
+PANT1 ENDP           ;Fin de PANT1
+;____________________________________
+CURSOR0 PROC NEAR    ;Iniciamos la funcion CURSOR0
+MOV AH,02H           ;Movemos el valor 02H a AH
+MOV BH,00H           ;Movemos el valor 00H a BH
+MOV DX,0C1AH         ;Movemos el valor 0C1AH a DX
+INT 10H              ;Interrupcion 10H
+RET                  ;Retornamos a la funcion principal
+CURSOR0 ENDP         ;Fin de CURSOR0
+;_____________________________________
+CURSOR1 PROC NEAR    ;Inicio de funcion CURSOR1
+MOV AH,02H           ;Movemos el valor 02H a AH
+MOV BH,00H           ;Movemos el valor 00H a BH
+MOV DX,1400H         ;Movemos el valor 1400H a DX
+INT 10H              ;Interrupcion 10H
+RET                  ;Retornamos a la funcion principal
+CURSOR1 ENDP         ;Fin de CURSOR1
+;_____________________________________
+CAMBIO PROC NEAR     ;Inicio de funcion CAMBIO
+CALL PANT0           ;Llamada a funcion CURSOR0
+CALL CURSOR0         ;Llamada a funcion PANT0
+CALL DESP            ;Llamada a funcion DESP
+CALL RETARd         ;Llamada a funcion RETARd
+CALL RETARi         ;Llamada a funcion RETARi
+CALL RETARd         ;Llamada a funcion RETARd
+CALL RETARi         ;Llamada a funcion RETARi
+INC COLOR            ;Incrementador de COLOR
+CMP COLOR,0FFH       ;Comparamos el valor 0FFH con COLOR
+JE SALE              ;Saltamos a la funcion SALE si ZF es 1
+JMP CAMBIO           ;Salto a la funcion CAMBIO
+SALE: RET            ;Inicia la funcion SALE y retorna
+CAMBIO ENDP          ;Terminamos la funcion CAMBIO
+;_____________________________________
+DESP PROC NEAR       ;Inicia la funcion DESP
+MOV AH,09H           ;Movemos el valor 09H a AH
+LEA DX, MSJE         ;Cargamos el valor de MSJE a DX
+INT 21H              ;Interrupcion 21H
+RET                  ;Retornamos a la funcion principal
+DESP ENDP            ;Fin de DESP
+;_____________________________________
+RETARd PROC NEAR     ;Inicio de la funcion RETARd
+DECR0: DEC REG0      ;Iniciamos la funcion DECR0;decrementa REG0
+CMP REG0,00000H      ;Comparamos REG0 con 00000H
+JE DECR1             ;Saltamos a la funcion DECR1 si ZF es 1
+JMP DECR0            ;Salto a DECR0
+DECR1: DEC REG1      ;Inicio de DECR1;Decrementamos REG1
+CMP REG1,00000H      ;Comparamos REG1 con 00000H
+JE DECR2             ;Saltamos a la funcion DECR2 si ZF es 1
+JMP DECR1            ;Salto a DECR1
+DECR2: DEC REG2      ;Inicio de DECR2;Decrementamos REG2
+CMP REG2,00000H      ;Comparamos REG2 con 00000H
+JE SALIR0            ;Saltamos a la funcion SALIR0 si ZF es 1
+JMP DECR2            ;Salto a DECR2
+SALIR0: RET          ;Inicia la funcion SALIR0 y retornamos
+RETARd ENDP          ;Fin de RETARd
+;_____________________________________
+RETARi PROC NEAR     ;Inicio de la funcion RETARi
+INCR0: INC REG0      ;Iniciamos la funcion INCR0;Incrementamos REG0
+CMP REG0,00005H   ;0FFFFH   ;Comparamos REG0 con 0FFFFH
+JE INCR1             ;Saltamos a la funcion INCR1 si ZF es 1
+JMP INCR0            ;Salto a INCR0
+INCR1: INC REG1      ;Inicio de INCR1;Incrementamos REG1
+CMP REG1,00005H      ;Comparamos REG1 con 0FFFFH
+JE INCR2             ;Saltamos a la funcion INCR2 si ZF es 1
+JMP INCR1            ;Salto a INCR1
+INCR2: INC REG2      ;Inicio de INCR2;Incrementamos REG2
+CMP REG2,00005H      ;Comparamos REG2 con 0FFFFH
+JE SALIR1            ;Saltamos a la funcion SALIR1 si ZF es 1
+JMP INCR2            ;Salto a INCR2
+SALIR1: RET          ;Inicia la funcion SALIR1 y retornamos
+RETARi ENDP          ;Fin de RETARi
+;_____________________________________
+END INICIO           ;Terminamos la funcion INICIO
+
+
+
+; [SOURCE]: D:\emu8086\emu8086\MySource\PROG10.asm

@@ -1,0 +1,48 @@
+< THE SYMBOL TABLE >  Prog9.exe_  --  emu8086 assembler version: 4.08 
+===================================================================================================
+Name                     	Offset    	Size      	Type      	Segment   
+===================================================================================================
+STACK                    	00000     	-5        	SEGMENT   	(ITSELF)  
+DATA                     	00004     	-5        	SEGMENT   	(ITSELF)  
+ENTRADA1                 	00000     	-1        	LABEL     	data      
+LONMAX1                  	00000     	1         	VAR       	data      
+LONREAL1                 	00001     	1         	VAR       	data      
+INTRO1                   	00002     	1         	VAR       	data      
+ENTRADA2                 	00017     	-1        	LABEL     	data      
+LONMAX2                  	00017     	1         	VAR       	data      
+LONREAL2                 	00018     	1         	VAR       	data      
+INTRO2                   	00019     	1         	VAR       	data      
+ENTRADA3                 	0002E     	-1        	LABEL     	data      
+LONMAX3                  	0002E     	1         	VAR       	data      
+LONREAL3                 	0002F     	1         	VAR       	data      
+INTRO3                   	00030     	1         	VAR       	data      
+ETIQ1                    	00045     	1         	VAR       	data      
+ETIQ2                    	0004E     	1         	VAR       	data      
+ETIQ3                    	00058     	1         	VAR       	data      
+CODE                     	0000B     	-5        	SEGMENT   	(ITSELF)  
+MAIN                     	00000     	-1        	FAR       	code      
+PANT0                    	00046     	-1        	NEAR      	code      
+CURS1                    	00053     	-1        	NEAR      	code      
+DESPM1                   	0005D     	-1        	NEAR      	code      
+TECLA1                   	00065     	-1        	NEAR      	code      
+CAMPANA1                 	0006D     	-1        	NEAR      	code      
+CURS2                    	0007D     	-1        	NEAR      	code      
+DESPM2                   	00087     	-1        	NEAR      	code      
+TECLA2                   	0008F     	-1        	NEAR      	code      
+CAMPANA2                 	00097     	-1        	NEAR      	code      
+CURS3                    	000A7     	-1        	NEAR      	code      
+DESPM3                   	000B1     	-1        	NEAR      	code      
+TECLA3                   	000B9     	-1        	NEAR      	code      
+CAMPANA3                 	000C1     	-1        	NEAR      	code      
+PANT1                    	000D1     	-1        	NEAR      	code      
+PANT2                    	000DE     	-1        	NEAR      	code      
+CURS11                   	000EB     	-1        	NEAR      	code      
+DESP1                    	000F5     	-1        	NEAR      	code      
+CURS21                   	000FD     	-1        	NEAR      	code      
+DESP2                    	00107     	-1        	NEAR      	code      
+CURS31                   	0010F     	-1        	NEAR      	code      
+DESP3                    	00119     	-1        	NEAR      	code      
+===================================================================================================
+[ 11/03/2023  --  1:43:57 ] 
+< END >
+ 

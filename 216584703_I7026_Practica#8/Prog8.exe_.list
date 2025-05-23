@@ -1,0 +1,144 @@
+EMU8086 GENERATED LISTING. MACHINE CODE <- SOURCE.
+ 
+Prog8.exe_ -- emu8086 assembler version: 4.08  
+ 
+[ 11/03/2023  --  0:42:08 ] 
+ 
+===================================================================================================
+[LINE]     LOC: MACHINE CODE                          SOURCE
+===================================================================================================
+ 
+[   1]        :                                       PAGE 60,132          ;Inicializacion del codigo
+[   2]        :                                       TITLE PROG8.EXE
+[   3]        :                                       .MODEL SMALL
+[   4]        :                                       .STACK 64
+[   5]        :                                       ;_____________________________________
+[   6]        :                                       .DATA                 ;Asignacion de valores
+[   7]    0040:                                       ENTRA LABEL BYTE
+[   8]    0040: 14                                    LONMAX DB 20
+[   9]    0041: 00                                    LONREAL DB ?
+[  10]    0042: 20 20 20 20 20 20 20 20 20 20 20 20   INTROD DB 21 DUP (' ')
+                20 20 20 20 20 20 20 20 20          
+[  11]    0057: 49 4E 54 52 4F 44 55 43 49 52 20 4E   MEN DB 'INTRODUCIR NOMBRE: ' , ''
+                4F 4D 42 52 45 3A 20                
+[  12]        :                                       ;_____________________________________
+[  13]        :                                       .CODE
+[  14]    0070:                                       BEGIN PROC FAR
+[  15]    0070: B8 04 00                              MOV AX, @DATA
+[  16]    0073: 8E D8                                 MOV DS, AX
+[  17]    0075:                                       OTRO:
+[  18]    0075: E8 57 00                              CALL PANT0            ;Funcion con llamadas a funciones
+[  19]    0078: BA 02 05                              MOV DX,0502H
+[  20]    007B: E8 5F 00                              CALL CURS0
+[  21]    007E: E8 17 00                              CALL DESPL0
+[  22]    0081: E8 1C 00                              CALL TECLA0
+[  23]    0084: 80 3E 01 00 00                        CMP LONREAL,00
+[  24]    0089: 74 08                                 JE SALIR
+[  25]    008B: E8 1A 00                              CALL CAMPA
+[  26]    008E: E8 26 00                              CALL CENTRAR
+[  27]    0091: EB E2                                 JMP OTRO
+[  28]    0093: B8 00 4C                              SALIR: MOV AX,4C00H
+[  29]    0096: CD 21                                 INT 21H
+[  30]        :                                       BEGIN ENDP
+[  31]        :                                       
+[  32]        :                                       ;_____________________________________
+[  33]    0098:                                       DESPL0 PROC NEAR        ;desplegar video
+[  34]    0098: B4 09                                 MOV AH,09H
+[  35]    009A: BA 17 00                              LEA DX, MEN
+[  36]    009D: CD 21                                 INT 21H
+[  37]    009F: C3                                    RET
+[  38]        :                                       DESPL0 ENDP
+[  39]        :                                       ;_____________________________________
+[  40]    00A0:                                       TECLA0 PROC NEAR        ;Inicializar la funcion TECLA0
+[  41]    00A0: B4 0A                                 MOV AH,0AH              ;Movemos e valor de 0AH a DX(Directiva)
+[  42]    00A2: BA 00 00                              LEA DX, ENTRA           ;Cargamos el operando Entra a DX
+[  43]    00A5: CD 21                                 INT 21H                 ;Interrupcion 21 H
+[  44]    00A7: C3                                    RET                     ;Retornamos a otro
+[  45]        :                                       TECLA0 ENDP             ;Finalizar la funcion TECLA0
+[  46]        :                                       ;_____________________________________
+[  47]    00A8:                                       CAMPA PROC NEAR         ;Inicializar la funcion CAMPA
+[  48]    00A8: B7 00                                 MOV BH,00               ;Movemos 00 a BH (Directiva)
+[  49]    00AA: 8A 1E 01 00                           MOV BL, LONREAL         ;Movemos lo que tenemos en LONREAL a BL
+[  50]    00AE: C6 47 02 07                           MOV INTROD[BX],07H      ;Introducimos un 07H(sonido de campana) a BX
+[  51]    00B2: C6 47 03 24                           MOV INTROD[BX+1],'$'    ;Introducimos un '$' a BX+1
+[  52]    00B6: C3                                    RET                     ;Retornamos a OTRO
+[  53]        :                                       CAMPA ENDP              ;Finalizar la funcion CAMPA
+[  54]        :                                       ;_____________________________________
+[  55]    00B7:                                       CENTRAR PROC NEAR       ;Inicializa la funcion CENTRAR
+[  56]    00B7: 8A 16 01 00                           MOV DL, LONREAL         ;Movemos lo que tiene LONREAL a DL
+[  57]    00BB: D0 EA                                 SHR DL,1                ;Desplazamos 1 a la derecha en DL
+[  58]    00BD: F6 DA                                 NEG DL                  ;Negamos DL
+[  59]    00BF: 80 C2 28                              ADD DL,40               ;Sumamos 40 a DL para poder centrar
+[  60]    00C2: B6 0C                                 MOV DH,12               ;Movemos 12 a DH
+[  61]    00C4: E8 16 00                              CALL CURS0              ;Llamada a CURS0
+[  62]    00C7: B4 09                                 MOV AH,09H              ;Funcion para desplegar una cadena
+[  63]    00C9: BA 02 00                              LEA DX, INTROD          ;Cargamos el operando de INTROD a DX
+[  64]    00CC: CD 21                                 INT 21H                 ;Interrupcion 21H
+[  65]    00CE: C3                                    RET                     ;Retornamos a OTRO
+[  66]        :                                       CENTRAR ENDP            ;Centrar finaliza
+[  67]        :                                       
+[  68]        :                                       ;_____________________________________
+[  69]    00CF:                                       PANT0 PROC NEAR
+[  70]    00CF: B8 00 06                              MOV AX,0600H
+[  71]    00D2: B7 1E                                 MOV BH,30
+[  72]    00D4: B9 00 00                              MOV CX,0000
+[  73]    00D7: BA 4F 18                              MOV DX,184FH
+[  74]    00DA: CD 10                                 INT 10H
+[  75]    00DC: C3                                    RET
+[  76]        :                                       PANT0 ENDP
+[  77]        :                                       
+[  78]        :                                       ;_____________________________________
+[  79]    00DD:                                       CURS0 PROC NEAR
+[  80]    00DD: B4 02                                 MOV AH,02H
+[  81]    00DF: B7 00                                 MOV BH,00
+[  82]    00E1: CD 10                                 INT 10H
+[  83]    00E3: C3                                    RET
+[  84]        :                                       CURS0 ENDP
+[  85]        :                                       ;_____________________________________
+[  86]        :                                       END BEGIN
+[  87]        :                                       
+ 
+===================================================================================================
+ 
+EXE HEADER - bytes from 0000 to 01FF inclusive.
+
+0000: 4D      -   exe signature (M)
+0001: 5A      -   exe signature (Z)
+0002: E4      -   bytes on last page (l.byte)
+0003: 00      -   bytes on last page (h.byte)
+0004: 02      -   512 byte pages in file (l.byte)
+0005: 00      -   512 byte pages in file (h.byte)
+0006: 01      -   relocations (l.byte)
+0007: 00      -   relocations (h.byte)
+0008: 20      -   paragraphs in header (l.byte)
+0009: 00      -   paragraphs in header (h.byte)
+000A: 00      -   minimum memory (l.byte)
+000B: 00      -   minimum memory (h.byte)
+000C: FF      -   maximum memory (l.byte)
+000D: FF      -   maximum memory (h.byte)
+000E: 00      -   SS - stack segment (l.byte)
+000F: 00      -   SS - stack segment (h.byte)
+0010: 40      -   SP - stack pointer (l.byte)
+0011: 00      -   SP - stack pointer (h.byte)
+0012: 7D      -   check sum (l.byte)
+0013: 67      -   check sum (h.byte)
+0014: 00      -   IP - instruction pointer (l.byte)
+0015: 00      -   IP - instruction pointer (h.byte)
+0016: 07      -   CS - code segment (l.byte)
+0017: 00      -   CS - code segment (h.byte)
+0018: 1E      -   relocation table adress (l.byte)
+0019: 00      -   relocation table adress (h.byte)
+001A: 00      -   overlay number (l.byte)
+001B: 00      -   overlay number (h.byte)
+001C: 01      -   signature (l.byte)
+001D: 00      -   signature (h.byte)
+001E: 01      -   relocation table - offset inside segment (l.byte)
+001F: 00      -   relocation table - offset inside segment (h.byte)
+0020: 07      -   relocation table - segment anchor (l.byte)
+0021: 00      -   relocation table - segment anchor (h.byte)
+0022 to 01FF  -   reserved relocation area  (00) 
+
+
+
+
+===================================================================================================

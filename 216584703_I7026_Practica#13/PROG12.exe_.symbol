@@ -1,0 +1,32 @@
+< THE SYMBOL TABLE >  PROG12.exe_  --  emu8086 assembler version: 4.08 
+===================================================================================================
+Name                     	Offset    	Size      	Type      	Segment   
+===================================================================================================
+STACK                    	00000     	-5        	SEGMENT   	(ITSELF)  
+DATA                     	00004     	-5        	SEGMENT   	(ITSELF)  
+COL                      	00000     	1         	VAR       	data      
+ROW                      	00001     	1         	VAR       	data      
+COUNT                    	00002     	1         	VAR       	data      
+LINES                    	00003     	1         	VAR       	data      
+ATTRIB                   	00004     	1         	VAR       	data      
+NINTEEN                  	00005     	1         	VAR       	data      
+MENU                     	00006     	1         	VAR       	data      
+PROMPT                   	0009E     	1         	VAR       	data      
+BEGIN                    	000E9     	-1        	FAR       	data      
+A10LOOP                  	0010D     	-1        	LABEL     	data      
+B10MENU                  	00137     	-1        	NEAR      	data      
+B20                      	00149     	-1        	LABEL     	data      
+B30                      	00153     	-1        	LABEL     	data      
+D10INPT                  	00179     	-1        	NEAR      	data      
+D20                      	00199     	-1        	LABEL     	data      
+D30                      	001B3     	-1        	LABEL     	data      
+D40                      	001CB     	-1        	LABEL     	data      
+D90                      	001D8     	-1        	LABEL     	data      
+H10DISP                  	001D9     	-1        	NEAR      	data      
+H20                      	001EC     	-1        	LABEL     	data      
+Q10CLR                   	00212     	-1        	NEAR      	data      
+Q20CURS                  	0021F     	-1        	NEAR      	data      
+===================================================================================================
+[ 26/03/2023  --  22:46:19 ] 
+< END >
+ 

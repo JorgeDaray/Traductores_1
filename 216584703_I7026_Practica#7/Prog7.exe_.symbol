@@ -1,0 +1,17 @@
+< THE SYMBOL TABLE >  Prog7.exe_  --  emu8086 assembler version: 4.08 
+===================================================================================================
+Name                     	Offset    	Size      	Type      	Segment   
+===================================================================================================
+STACK                    	00000     	-5        	SEGMENT   	(ITSELF)  
+DATA                     	00004     	-5        	SEGMENT   	(ITSELF)  
+ETIQ                     	00000     	1         	VAR       	data      
+CODE                     	00006     	-5        	SEGMENT   	(ITSELF)  
+BEGIN                    	00000     	-1        	FAR       	code      
+PANT0                    	00016     	-1        	NEAR      	code      
+PANT2                    	00024     	-1        	NEAR      	code      
+CURSOR                   	00032     	-1        	NEAR      	code      
+DESPL0                   	0003C     	-1        	NEAR      	code      
+===================================================================================================
+[ 04/03/2023  --  15:31:00 ] 
+< END >
+ 

@@ -1,0 +1,74 @@
+EMU8086 GENERATED LISTING. MACHINE CODE <- SOURCE.
+ 
+PROG11.com_ -- emu8086 assembler version: 4.08  
+ 
+[ 26/03/2023  --  22:42:34 ] 
+ 
+===================================================================================================
+[LINE]     LOC: MACHINE CODE                          SOURCE
+===================================================================================================
+ 
+[   1]        :                                       TITLE PROG12 Despliegue grafico ;Titulo del programa
+[   2]        :                                       .MODEL SMALL
+[   3]        :                                       ;----------------------------------------------
+[   4]        :                                       .CODE
+[   5]        :                                       ORG 100H
+[   6]    0100:                                       BEGIN PROC NEAR     ;Inicia funcion BEGIN
+[   7]    0100: B4 0F                                 MOV AH, 0FH     ;Conserva
+[   8]    0102: CD 10                                 INT 10H         ;modo de video
+[   9]    0104: 50                                    PUSH AX         ;original
+[  10]    0105: E8 10 00                              CALL B10MODE    ;Designa el modo grafico
+[  11]    0108: E8 1C 00                              CALL C10DISP    ;Despliegue grafico en color
+[  12]    010B: E8 3C 00                              CALL D10KEY     ;Obtiene respuesta del teclado
+[  13]    010E: 58                                    POP AX          ;Restaura
+[  14]    010F: B4 00                                 MOV AH,00H      ;el modo original
+[  15]    0111: CD 10                                 INT 10H         ;(en AL)
+[  16]    0113: B8 00 4C                              MOV AX,4C00H    ;Sale al DOS
+[  17]    0116: CD 21                                 INT 21H         ;Interrupcion 21H
+[  18]        :                                       BEGIN ENDP          ;Termina la funcion BEGIN
+[  19]        :                                       ;----------------------------------------------
+[  20]    0118:                                       B10MODE PROC NEAR
+[  21]    0118: B4 00                                 MOV AH,0H   ;-Establece el modo gráfico EGA/VGA
+[  22]    011A: B0 13                                 MOV AL,13H  ;650 cois x 350 renglones
+[  23]    011C: CD 10                                 INT 10H     ;Interrupcion 10H
+[  24]    011E: B4 0B                                 MOV AH,0BH  ;Designa la paleta para el fondo
+[  25]    0120: B7 00                                 MOV BH, 00  ;Fondo
+[  26]    0122: B3 07                                 MOV BL,07H  ;Gris
+[  27]    0124: CD 10                                 INT 10H
+[  28]    0126: C3                                    RET
+[  29]        :                                       B10MODE ENDP
+[  30]        :                                       ;----------------------------------------------
+[  31]    0127:                                       C10DISP PROC NEAR
+[  32]    0127: BB 00 00                              MOV BX, 00  ;Designa la pagina inicial,
+[  33]    012A: B9 40 00                              MOV CX, 64  ;color, columna
+[  34]    012D: BA 46 00                              MOV DX, 70  ; y renglon
+[  35]    0130:                                       C20:
+[  36]    0130: B4 0C                                 MOV AH,0CH  ;Escribe el pixel punto
+[  37]    0132: 8A C3                                 MOV AL, BL  ;Designa el color
+[  38]    0134: CD 10                                 INT 10H     ;Se conservan BX, CX y DX
+[  39]    0136: 41                                    INC CX      ;Incrementa la columna
+[  40]    0137: 81 F9 40 02                           CMP CX,576  ;Es la columna 576?
+[  41]    013B: 75 F3                                 JNE C20     ;no, repetir
+[  42]    013D: B9 40 00                              MOV CX, 64  ;sí, restaurar la columna
+[  43]    0140: FE C3                                 INC BL      ;Cambiar el color
+[  44]    0142: 42                                    INC DX      ;Incrementa el renglon
+[  45]    0143: 81 FA 18 01                           CMP DX,280  ;Es el renglon 280?
+[  46]    0147: 75 E7                                 JNE C20     ;no, repetir
+[  47]    0149: C3                                    RET         ;sí, terminar
+[  48]        :                                       C10DISP ENDP
+[  49]        :                                       ;---------------------------------------------
+[  50]    014A:                                       D10KEY PROC NEAR
+[  51]    014A: B4 10                                 MOV AH,10H      ;Petición para entrada
+[  52]    014C: CD 16                                 INT 16H         ;desde el teclado
+[  53]    014E: C3                                    RET
+[  54]        :                                       D10KEY ENDP
+[  55]        :                                       END BEGIN
+[  56]        :                                       
+ 
+===================================================================================================
+ 
+
+
+
+
+===================================================================================================

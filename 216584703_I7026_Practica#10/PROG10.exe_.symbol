@@ -1,0 +1,34 @@
+< THE SYMBOL TABLE >  PROG10.exe_  --  emu8086 assembler version: 4.08 
+===================================================================================================
+Name                     	Offset    	Size      	Type      	Segment   
+===================================================================================================
+STACK                    	00000     	-5        	SEGMENT   	(ITSELF)  
+DATA                     	00004     	-5        	SEGMENT   	(ITSELF)  
+REG0                     	00000     	2         	VAR       	data      
+REG1                     	00002     	2         	VAR       	data      
+REG2                     	00004     	2         	VAR       	data      
+COLOR                    	00006     	1         	VAR       	data      
+MSJE                     	00007     	1         	VAR       	data      
+CODE                     	00005     	-5        	SEGMENT   	(ITSELF)  
+INICIO                   	00000     	-1        	FAR       	code      
+PANT0                    	00013     	-1        	NEAR      	code      
+PANT1                    	00023     	-1        	NEAR      	code      
+CURSOR0                  	00031     	-1        	NEAR      	code      
+CURSOR1                  	0003B     	-1        	NEAR      	code      
+CAMBIO                   	00045     	-1        	NEAR      	code      
+SALE                     	00067     	-1        	LABEL     	code      
+DESP                     	00068     	-1        	NEAR      	code      
+RETARD                   	00070     	-1        	NEAR      	code      
+DECR0                    	00070     	-1        	LABEL     	code      
+DECR1                    	0007D     	-1        	LABEL     	code      
+DECR2                    	0008A     	-1        	LABEL     	code      
+SALIR0                   	00097     	-1        	LABEL     	code      
+RETARI                   	00098     	-1        	NEAR      	code      
+INCR0                    	00098     	-1        	LABEL     	code      
+INCR1                    	000A5     	-1        	LABEL     	code      
+INCR2                    	000B2     	-1        	LABEL     	code      
+SALIR1                   	000BF     	-1        	LABEL     	code      
+===================================================================================================
+[ 17/03/2023  --  12:54:09 ] 
+< END >
+ 
